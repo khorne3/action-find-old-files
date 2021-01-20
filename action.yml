@@ -1,0 +1,23 @@
+name: 'Stale Watchdog Find Docs'
+description: 'Make a list of all staled docs and save it to file'
+
+branding:
+  icon: 'file-plus'
+  color: 'yellow'
+
+inputs:
+  minAge:
+    description: 'Stale docs min age'
+    required: true
+    default: "21"
+  dirs:
+    description: 'Comma-separated list of direcrories to look staled files'
+    required: true
+    default: '["docs"]'
+  
+outputs:
+  files:
+    description: 'JSON list with staled files'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
