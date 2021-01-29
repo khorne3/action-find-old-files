@@ -17,7 +17,7 @@
   "contributors": [
     "https://github.com/whitesunset",
     "Bruno Škvorc <bruno@web3.foundation>"
-  ]
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/whitesunset/stale-watchdog-find-docs-action.git"
