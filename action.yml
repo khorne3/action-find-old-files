@@ -1,5 +1,5 @@
-name: 'Stale Watchdog Find Docs'
-description: 'Make a list of all staled docs and save it to file'
+name: 'Find Old Files'
+description: 'Make a list of all stale Markdown docs'
 
 branding:
   icon: 'file-plus'
@@ -9,15 +9,15 @@ inputs:
   minAge:
     description: 'Stale docs min age'
     required: true
-    default: "21"
+    default: "45"
   dirs:
-    description: 'Comma-separated list of direcrories to look staled files'
+    description: 'Comma-separated list of direcrories to look for stale files in'
     required: true
     default: '["docs"]'
   
 outputs:
   files:
-    description: 'JSON list with staled files'
+    description: 'JSON list with stale files'
 runs:
   using: 'node12'
   main: 'dist/index.js'
