@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/whitesunset/stale-watchdog-find-docs-action.git"
+    "url": "git+https://github.com/w3f/stale-watchdog-find-docs-action.git"
   },
   "license": "MIT",
   "devDependencies": {
