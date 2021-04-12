@@ -9,7 +9,7 @@ inputs:
   minAge:
     description: 'Stale docs min age'
     required: true
-    default: "14"
+    default: "1"
   dirs:
     description: 'Comma-separated list of direcrories to look for stale files in'
     required: true
