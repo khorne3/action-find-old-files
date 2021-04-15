@@ -2,7 +2,7 @@ import cp from 'child_process'
 import { FileList } from './model'
 import { promises as fs } from 'fs'
 import { basename, join } from 'path'
-import { getInput, setOutput } from '@actions/core'
+import { getInput, setOutput, debug } from '@actions/core'
 
 const FILES = 'stale-docs.json'
 const DIRS = JSON.parse(getInput('dirs'))
@@ -14,12 +14,15 @@ const MIN_AGE = parseInt(getInput('minAge'))
 async function getFiles(dir: string): Promise<string[]> {
   try {
     const dirPath = join(process.env.GITHUB_WORKSPACE, dir)
+    debug('dirPath: ' + dirPath)
     const items = await fs.readdir(dirPath, { withFileTypes: true })
+    debug('items: ' + items)
     const files = await Promise.all(
       items.map(async (item) => {
         const path = `${dir}/${item.name}`
         const fullPath = join(process.env.GITHUB_WORKSPACE, dir, item.name)
         const res = await fs.lstat(fullPath)
+        debug('res: ' + res)
 
         return res.isDirectory() ? getFiles(path) : path
       }),
