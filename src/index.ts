@@ -16,13 +16,13 @@ async function getFiles(dir: string): Promise<string[]> {
     const dirPath = join(process.env.GITHUB_WORKSPACE, dir)
     debug('dirPath: ' + dirPath)
     const items = await fs.readdir(dirPath, { withFileTypes: true })
-    debug('items: ' + items)
+    debug('items: ' + JSON.stringify(items))
     const files = await Promise.all(
       items.map(async (item) => {
         const path = `${dir}/${item.name}`
         const fullPath = join(process.env.GITHUB_WORKSPACE, dir, item.name)
         const res = await fs.lstat(fullPath)
-        debug('res: ' + res)
+        debug('res: ' + JSON.stringify(res))
 
         return res.isDirectory() ? getFiles(path) : path
       }),
