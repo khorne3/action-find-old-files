@@ -44,7 +44,7 @@ async function findStaleDocs(): Promise<FileList> {
       for (const file of files) {
         // Skip mirrors, check only Markdown files
         if (basename(file).indexOf('mirror') > -1 || !file.endsWith('.md')) continue
-
+        debug('file:' + JSON.stringify(file))
         const output = parseInt(cp.execSync('git log -1 --pretty="format:%ct" ' + file, { encoding: 'utf8' }))
         debug('output: ' + JSON.stringify(output))
         const age = Math.round((Date.now() / 1000 - output) / 86400)

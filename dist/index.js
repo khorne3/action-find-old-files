@@ -53,6 +53,7 @@ function findStaleDocs() {
                     // Skip mirrors, check only Markdown files
                     if (path_1.basename(file).indexOf('mirror') > -1 || !file.endsWith('.md'))
                         continue;
+                    core_1.debug('file:' + JSON.stringify(file));
                     const output = parseInt(child_process_1.default.execSync('git log -1 --pretty="format:%ct" ' + file, { encoding: 'utf8' }));
                     core_1.debug('output: ' + JSON.stringify(output));
                     const age = Math.round((Date.now() / 1000 - output) / 86400);
