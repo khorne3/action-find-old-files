@@ -26,11 +26,14 @@ function getFiles(dir) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const dirPath = path_1.join(process.env.GITHUB_WORKSPACE, dir);
+            core_1.debug('dirPath: ' + dirPath);
             const items = yield fs_1.promises.readdir(dirPath, { withFileTypes: true });
+            core_1.debug('items: ' + items);
             const files = yield Promise.all(items.map((item) => __awaiter(this, void 0, void 0, function* () {
                 const path = `${dir}/${item.name}`;
                 const fullPath = path_1.join(process.env.GITHUB_WORKSPACE, dir, item.name);
                 const res = yield fs_1.promises.lstat(fullPath);
+                core_1.debug('res: ' + res);
                 return res.isDirectory() ? getFiles(path) : path;
             })));
             return Array.prototype.concat(...files);
