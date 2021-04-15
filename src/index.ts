@@ -56,7 +56,7 @@ async function findStaleDocs(): Promise<FileList> {
   } catch (error) {
     console.error(`Find stale docs ${error}`)
   }
-
+  debug('result: ' + JSON.stringify(result))
   return result
 }
 

@@ -64,6 +64,7 @@ function findStaleDocs() {
         catch (error) {
             console.error(`Find stale docs ${error}`);
         }
+        core_1.debug('result: ' + JSON.stringify(result));
         return result;
     });
 }
