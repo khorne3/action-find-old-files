@@ -47,7 +47,7 @@ async function findStaleDocs(): Promise<FileList> {
 
         const output = parseInt(cp.execSync('git log -1 --pretty="format:%ct" ' + file, { encoding: 'utf8' }))
         const age = Math.round((Date.now() / 1000 - output) / 86400)
-
+        debug('age: ' + age)
         if (age >= MIN_AGE) {
           result[file] = age
         }
@@ -65,8 +65,7 @@ async function findStaleDocs(): Promise<FileList> {
  */
 async function run(): Promise<void> {
   const files = await findStaleDocs()
-  debug('files: ' + files)
-  debug('files: ' + JSON.stringify(files))
+
   await fs.writeFile(FILES, JSON.stringify(files, null, 4))
   setOutput('files', FILES)
 

@@ -55,6 +55,7 @@ function findStaleDocs() {
                         continue;
                     const output = parseInt(child_process_1.default.execSync('git log -1 --pretty="format:%ct" ' + file, { encoding: 'utf8' }));
                     const age = Math.round((Date.now() / 1000 - output) / 86400);
+                    core_1.debug('age: ' + age);
                     if (age >= MIN_AGE) {
                         result[file] = age;
                     }
@@ -74,8 +75,6 @@ function findStaleDocs() {
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const files = yield findStaleDocs();
-        core_1.debug('files: ' + files);
-        core_1.debug('files: ' + JSON.stringify(files));
         yield fs_1.promises.writeFile(FILES, JSON.stringify(files, null, 4));
         core_1.setOutput('files', FILES);
         console.log(`Finished: ${FILES}`);
