@@ -55,7 +55,7 @@ function findStaleDocs() {
                         continue;
                     core_1.debug('file:' + JSON.stringify(file));
                     //const output = parseInt(cp.execSync('git log -1 --pretty="format:%ct" ' + file, { encoding: 'utf8' }))
-                    const output = child_process_1.default.execSync('git log -1 ' + file);
+                    const output = child_process_1.default.execSync('git log -1 ' + file, { encoding: 'utf8' });
                     core_1.debug('output: ' + JSON.stringify(output));
                     //const age = Math.round((Date.now() / 1000 - output) / 86400)
                     // debug('age: ' + age)
