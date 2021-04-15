@@ -14,15 +14,12 @@ const MIN_AGE = parseInt(getInput('minAge'))
 async function getFiles(dir: string): Promise<string[]> {
   try {
     const dirPath = join(process.env.GITHUB_WORKSPACE, dir)
-    debug('dirPath: ' + dirPath)
     const items = await fs.readdir(dirPath, { withFileTypes: true })
-    debug('items: ' + JSON.stringify(items))
     const files = await Promise.all(
       items.map(async (item) => {
         const path = `${dir}/${item.name}`
         const fullPath = join(process.env.GITHUB_WORKSPACE, dir, item.name)
         const res = await fs.lstat(fullPath)
-        debug('res: ' + JSON.stringify(res))
 
         return res.isDirectory() ? getFiles(path) : path
       }),
@@ -68,7 +65,8 @@ async function findStaleDocs(): Promise<FileList> {
  */
 async function run(): Promise<void> {
   const files = await findStaleDocs()
-
+  debug('files: ' + files)
+  debug('files: ' + JSON.stringify(files))
   await fs.writeFile(FILES, JSON.stringify(files, null, 4))
   setOutput('files', FILES)
 
