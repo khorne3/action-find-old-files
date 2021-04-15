@@ -46,27 +46,28 @@ function getFiles(dir) {
 function findStaleDocs() {
     return __awaiter(this, void 0, void 0, function* () {
         const result = {};
-        // try {
-        //   for (const dir of DIRS) {
-        //     const files = await getFiles(dir)
-        //     for (const file of files) {
-        //       // Skip mirrors, check only Markdown files
-        //       if (basename(file).indexOf('mirror') > -1 || !file.endsWith('.md')) continue
-        //       debug('file:' + JSON.stringify(file))
-        //       const output = parseInt(cp.execSync('git log -1 --pretty="format:%ct" ' + file, { encoding: 'utf8' }))
-        //       debug('output: ' + JSON.stringify(output))
-        //       const age = Math.round((Date.now() / 1000 - output) / 86400)
-        //       debug('age: ' + age)
-        //       if (age >= MIN_AGE) {
-        //         result[file] = age
-        //       }
-        //     }
-        //   }
-        // } catch (error) {
-        //   console.error(`Find stale docs ${error}`)
-        // }
-        const output = parseInt(child_process_1.default.execSync('git log -1 --pretty="format:%ct" ' + 'admin/templates.md', { encoding: 'utf8' }));
-        core_1.debug('output: ' + JSON.stringify(output));
+        try {
+            for (const dir of DIRS) {
+                const files = yield getFiles(dir);
+                for (const file of files) {
+                    // Skip mirrors, check only Markdown files
+                    if (path_1.basename(file).indexOf('mirror') > -1 || !file.endsWith('.md'))
+                        continue;
+                    core_1.debug('file:' + JSON.stringify(file));
+                    //const output = parseInt(cp.execSync('git log -1 --pretty="format:%ct" ' + file, { encoding: 'utf8' }))
+                    const output = child_process_1.default.execSync('git log -1' + file);
+                    core_1.debug('output: ' + JSON.stringify(output));
+                    //const age = Math.round((Date.now() / 1000 - output) / 86400)
+                    // debug('age: ' + age)
+                    // if (age >= MIN_AGE) {
+                    //   result[file] = age
+                    // }
+                }
+            }
+        }
+        catch (error) {
+            console.error(`Find stale docs ${error}`);
+        }
         core_1.debug('result: ' + JSON.stringify(result));
         return result;
     });

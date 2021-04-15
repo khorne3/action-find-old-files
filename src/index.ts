@@ -37,28 +37,28 @@ async function getFiles(dir: string): Promise<string[]> {
 async function findStaleDocs(): Promise<FileList> {
   const result: FileList = {}
 
-  // try {
-  //   for (const dir of DIRS) {
-  //     const files = await getFiles(dir)
+  try {
+    for (const dir of DIRS) {
+      const files = await getFiles(dir)
 
-  //     for (const file of files) {
-  //       // Skip mirrors, check only Markdown files
-  //       if (basename(file).indexOf('mirror') > -1 || !file.endsWith('.md')) continue
-  //       debug('file:' + JSON.stringify(file))
-  //       const output = parseInt(cp.execSync('git log -1 --pretty="format:%ct" ' + file, { encoding: 'utf8' }))
-  //       debug('output: ' + JSON.stringify(output))
-  //       const age = Math.round((Date.now() / 1000 - output) / 86400)
-  //       debug('age: ' + age)
-  //       if (age >= MIN_AGE) {
-  //         result[file] = age
-  //       }
-  //     }
-  //   }
-  // } catch (error) {
-  //   console.error(`Find stale docs ${error}`)
-  // }
-  const output = parseInt(cp.execSync('git log -1 --pretty="format:%ct" ' + 'admin/templates.md', { encoding: 'utf8' }))
-  debug('output: ' + JSON.stringify(output))
+      for (const file of files) {
+        // Skip mirrors, check only Markdown files
+        if (basename(file).indexOf('mirror') > -1 || !file.endsWith('.md')) continue
+        debug('file:' + JSON.stringify(file))
+        //const output = parseInt(cp.execSync('git log -1 --pretty="format:%ct" ' + file, { encoding: 'utf8' }))
+        const output = cp.execSync('git log -1' + file)
+        debug('output: ' + JSON.stringify(output))
+        //const age = Math.round((Date.now() / 1000 - output) / 86400)
+        // debug('age: ' + age)
+        // if (age >= MIN_AGE) {
+        //   result[file] = age
+        // }
+      }
+    }
+  } catch (error) {
+    console.error(`Find stale docs ${error}`)
+  }
+
   debug('result: ' + JSON.stringify(result))
   return result
 }
